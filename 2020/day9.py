@@ -38,17 +38,27 @@ def part2():
     lines = get_file_lines(input_path)
     lines = list(map(int, lines))
 
-    # TOTAL = 127
-    TOTAL = 542529149
-    end = 1
-    for start in range(len(lines)):
-        while sum(lines[start:end]) < TOTAL:
-            end += 1
-        if sum(lines[start:end]) == TOTAL:
-            found = lines[start:end]
-            return min(found) + max(found)
+    # GOAL = 127
+    GOAL = 542529149
 
-    raise Exception('No answer found')
+    # Old solution
+    # end = 1
+    # for start in range(len(lines)):
+    #     while sum(lines[start:end]) < GOAL:
+    #         end += 1
+    #     if sum(lines[start:end]) == GOAL:
+    #         found = lines[start:end]
+    #         return min(found) + max(found)
+
+    # Better solution
+    start, end = 0, 0
+    while (total := sum(lines[start:end])) != GOAL:
+        if total < GOAL:
+            end += 1
+        else:
+            start += 1
+
+    return min(lines[start:end]) + max(lines[start:end])
 
 
 def run():
